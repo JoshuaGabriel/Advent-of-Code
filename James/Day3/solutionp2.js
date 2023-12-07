@@ -42,9 +42,19 @@ function processFile(filePath) {
             while (j < row_length){
                 start = j
                 var num = ""
-
-                while (j <= row_length && parseInt(line[j])){
+                
+                // if (line[j] == '0'){
+                //     console.log("Hello this is 0")
+                //     console.log(parseInt(line[j]))
+                //     console.log(j < row_length)
+                // }
+                while (j < row_length && parseInt(line[j]) || line[j] == '0'){
+                    // if (parseInt(line[j])== 0 || line[j] == "0"){
+                    //     console.log("Hello, this is 0")
+                    // }
+                    // console.log("current char: ", line[j])
                     num += line[j]
+                    // console.log("current num: ", num)
                     j++
                 }
 
@@ -83,7 +93,7 @@ function processFile(filePath) {
                 var nums = goods[g][z]
                 if (lines[g][z] == '*' && nums.length ==2){
                     cnt++
-                    console.log(nums)
+                    // console.log(nums)
                     p2_ans += (nums[0] * nums[1])
                 }
             }
