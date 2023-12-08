@@ -44,11 +44,11 @@ fs.readFile(filePath, 'utf8', function(err, data) {
             // adding winning cards to list
             if (gamble.includes(win_nums[i])){
                 // console.log(curCard)
-                perm.push(curCard+1)
+                perm.push(curCard)
                 // console.log("perm: ",perm)
                 // console.log("current tally: ", tally)
                 curCard += 1
-                tally += 1
+                // tally += 1
             }
         }
         res.push(perm)
@@ -58,60 +58,23 @@ fs.readFile(filePath, 'utf8', function(err, data) {
         // console.log("sumOfCards: ", sumOfCards)
 
     })
-    // console.log(cnt_total)
 
-    // console.log("res: ", res)
-    standby = arr_red(res)
-    // console.log(standby)
+    console.log("res: ", res)
+    var score_track= Array(lines.length).fill(1)
 
+    console.log("score_track: " , score_track)
 
-    // Array spread
-    res = [...standby]
-    // console.log("res: ", res)
-    
-    // console.log(res[0])
-
-    standby = []
-
-    // console.log("res: ", res)
-    // console.log("standby: ", standby)
-
-    // First run done
-
-    // Rest of the iteration
-    // while(standby != [] && res !=[]){
-    //     for (let i = 0; i < res.length; i++){
-            
-    //     }
-    // }
-    // console.log(win_check(lines, res[2]-1))
-    // console.log("your momma fat")
-    var counter = 0
-
-    tally += lines.length
-
-    // console.log(tally)
-    while(res.length !== 0){
-        for (let j = 0; j < res.length; j++){
-            // console.log("alsdkfjasl;kfdjasl;dkfjas")
-            standby.push(win_check(lines, res[j]-1))
+    for (let k = lines.length-1; k > -1; k--){
+        for (let j of res[k]){
+            score_track[k] += score_track[j]
         }
-        standby = arr_red(standby)
-        res = [...standby]
-        // console.log("standby: ",standby)
-        // console.log("res: ", res)
-        standby = []
-        // break
-        console.log("counter: ", counter)
-        counter++
     }
 
-    // console.log(standby)
-
-    console.log("tally: ", tally)
-
-
-
+    var score = 0
+    for (let i in score_track){
+        score += score_track[i]
+    }
+    console.log(score)
 });
 
 
@@ -154,27 +117,3 @@ function win_check(lines,i){
     }
     return perm
 }
-
-
-// ```
-// Plan: 
-// Standby queue
-// 1. Loop through them once... to get the basic queue of cards
-// After Card 1 queue: [2, 3, 4, 5]
-// After Card 2 queue: [2, 3, 4, 5], [3, 4]
-// ...
-// After Card 6 queue: [2, 3, 4, 5], [3, 4], [4, 5], [5], [], []
-
-// 2. Combine into big queue:
-// [2, 3, 4, 5, 3, 4, 4, 5, 5]
-
-// 3. Loop through said queue and repeat 1. and add the winning cards to a standby queue
-
-// 4. set ready queue to standby queue
-
-// 5. repeat until standby and ready are both empty
-// ```
-
-
-
-
